@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import '../models/number.dart';
+import '../models/item.dart';
 
-class NumberItem extends StatelessWidget {
-  const NumberItem({super.key, required this.number});
+class ListItem extends StatelessWidget {
+  const ListItem({super.key, required this.item, required this.color});
 
-  final Number number;
+  final Item item;
+  final Color color;
+
+  String getSoundPath() {
+    return 'assets/sounds/${item.type}/${item.soundName}';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      color: Colors.orange,
+      color: color,
       child: Row(
         children: [
           Container(
             color: const Color.fromARGB(255, 225, 202, 158),
-            child: Image.asset(number.imagePath),
+            child: Image.asset(item.imagePath),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 12.0),
@@ -24,11 +29,11 @@ class NumberItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  number.englishWord,
+                  item.englishWord,
                   style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 Text(
-                  number.japaneseWord,
+                  item.japaneseWord,
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ],
@@ -41,13 +46,13 @@ class NumberItem extends StatelessWidget {
             onPressed: () async {
     final player = AudioPlayer();
     try {
-    if (number.soundName == null) {
+    if (item.soundName == null) {
     throw Exception("Sound name is null");
     }
-    String assetPath = 'assets/sounds/numbers/${number.soundName}';
+    String assetPath = getSoundPath();
     print("Setting asset to: $assetPath");
     await player.setAsset(assetPath);
-    print("Playing sound: ${number.soundName}");
+    print("Playing sound: ${item.soundName}");
     await player.play();
     } catch (ex) {
     print("Error: $ex");
