@@ -3,6 +3,7 @@ import '../components/category_item.dart';
 import 'numbers_page.dart';
 import 'family_members_page.dart';
 import 'colors_page.dart';
+import 'phrases_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -45,7 +46,9 @@ class HomePage extends StatelessWidget {
           ),
           Category(
             onTap: () {
-              print("Category 4 tapped");
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => const PhrasesPage(),
+              ));
             },
             text: "Phrases",
             color: Color.fromARGB(255, 94, 14, 82),
